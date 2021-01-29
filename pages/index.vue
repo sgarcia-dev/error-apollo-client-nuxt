@@ -26,7 +26,24 @@
 </template>
 
 <script>
-export default {}
+import gql from 'graphql-tag'
+
+export default {
+  apollo: {
+    books: {
+      query() {
+        return gql`
+          query books {
+            books {
+              title
+              author
+            }
+          }
+        `
+      },
+    },
+  },
+}
 </script>
 
 <style>
