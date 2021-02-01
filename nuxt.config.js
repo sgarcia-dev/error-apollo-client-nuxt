@@ -32,12 +32,25 @@ export default {
   modules: ['@nuxtjs/apollo'],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    extend(config, ctx) {
+      if (ctx.isDev) {
+        config.devtool = 'inline-source-map'
+      }
+    },
+  },
   apollo: {
     clientConfigs: {
       default: {
         httpEndpoint: 'http://localhost:4000',
       },
     },
+    defaultOptions: {
+      $query: {
+        // See: https://www.apollographql.com/docs/react/data/error-handling/#error-policies
+        errorPolicy: 'ignore',
+      },
+    },
+    errorHandler: '~/apollo/onError.js',
   },
 }
