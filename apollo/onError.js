@@ -5,21 +5,15 @@ export default (
   context
 ) => {
   const errors = []
-  if (networkError) {
+  if (graphQLErrors) {
+    graphQLErrors.forEach((e) => errors.push({ ...e, type: 'GRAPHQL' }))
+  } else if (networkError) {
     try {
       JSON.parse(networkError.bodyText)
     } catch (e) {
       networkError.message = networkError.bodyText
     }
     errors.push({ message: networkError, type: 'NETWORK' })
-  }
-  if (graphQLErrors) {
-    graphQLErrors.forEach((e) =>
-      errors.push({
-        ...e,
-        type: 'GRAPHQL',
-      })
-    )
   }
 
   if (errors.length) {

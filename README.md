@@ -1,20 +1,14 @@
-# apollo-client-nuxt
+# Apollo Client Nuxt
 
-## Build Setup
+A basic nuxt app testing apollo client's error handling capabilities.
 
-```bash
-# install dependencies
-$ npm install
+The purpose behind this, is to ensure that invalid GraphQL responses (such as when the server is down and it returns a HTML error page) don't crash the page render or the server.
 
-# serve with hot reload at localhost:3000
-$ npm run dev
+## How to run
 
-# build for production and launch server
-$ npm run build
-$ npm run start
-
-# generate static project
-$ npm run generate
-```
-
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+* `$ npm install`
+* for dev mode hot-reload at `localhost:3000`:
+  * `$ npm run dev`
+* for prod mode: 
+  * `$ npm run build`
+  * `$ npm run start`
