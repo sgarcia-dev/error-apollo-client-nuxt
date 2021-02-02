@@ -48,7 +48,7 @@ export default {
     defaultOptions: {
       $query: {
         // See: https://www.apollographql.com/docs/react/data/error-handling/#error-policies
-        errorPolicy: 'ignore',
+        errorPolicy: 'all',
       },
     },
     errorHandler: '~/apollo/onError.js',

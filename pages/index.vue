@@ -27,6 +27,7 @@
 
 <script>
 import gql from 'graphql-tag'
+import consola from 'consola'
 
 export default {
   apollo: {
@@ -41,6 +42,16 @@ export default {
           }
         `
       },
+      error(error, vm, key, type, options) {
+        consola.success('Localized apollo error handler ran')
+        consola.error(error)
+        return false // without it, the global apollo error handler runs
+      },
+      update(data) {
+        // Never called due to error above
+        console.log(data)
+      },
+      errorPolicy: 'all',
     },
   },
 }
