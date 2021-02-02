@@ -49,7 +49,8 @@ export default {
       },
       update(data) {
         // Never called due to error above
-        console.log(data)
+        consola.success('Ran query update method with data:', data)
+        return data.books
       },
       errorPolicy: 'all',
     },
