@@ -27,7 +27,7 @@
 
 <script>
 import gql from 'graphql-tag'
-import consola from 'consola'
+// import consola from 'consola'
 
 export default {
   apollo: {
@@ -38,20 +38,21 @@ export default {
             books {
               title
               author
+              test
             }
           }
         `
       },
-      error(error, vm, key, type, options) {
-        consola.success('Localized apollo error handler ran')
-        consola.error(error)
-        return false // without it, the global apollo error handler runs
-      },
-      update(data) {
-        // Never called due to error above
-        consola.success('Ran query update method with data:', data)
-        return data.books
-      },
+      // error(error, vm, key, type, options) {
+      //   consola.success('index page apollo error handler ran')
+      //   consola.error(error)
+      //   return false // without it, the global apollo error handler runs
+      // },
+      // update(data) {
+      //   // Never called due to error above
+      //   consola.success('Ran query update method with data:', data)
+      //   return data.books
+      // },
       errorPolicy: 'all',
     },
   },

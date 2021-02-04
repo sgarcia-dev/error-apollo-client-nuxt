@@ -41,9 +41,7 @@ export default {
   },
   apollo: {
     clientConfigs: {
-      default: {
-        httpEndpoint: 'http://localhost:4000',
-      },
+      default: '~/apollo/config.js',
     },
     defaultOptions: {
       $query: {
@@ -51,6 +49,5 @@ export default {
         errorPolicy: 'all',
       },
     },
-    errorHandler: '~/apollo/onError.js',
   },
 }
