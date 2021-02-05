@@ -41,7 +41,7 @@ export default {
   },
   apollo: {
     clientConfigs: {
-      default: '~/apollo/config.js',
+      default: '~/apollo/client.config.js',
     },
     defaultOptions: {
       $query: {
@@ -49,5 +49,6 @@ export default {
         errorPolicy: 'all',
       },
     },
+    errorHandler: '~/apollo/nuxt-apollo-error-handler.js',
   },
 }
