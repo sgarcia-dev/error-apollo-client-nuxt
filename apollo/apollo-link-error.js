@@ -36,24 +36,9 @@ export default onError(
      * The observable must return an object of type `FetchResult` as declared in Apollo Client's source code
      * https://github.com/apollographql/apollo-client/blob/e145a860a10c12fdc4d863379f32e4080597323b/src/link/core/types.ts#L23
      */
-
-    // IMPORTANT: This doesn't solve all our issues, see comments below
-    return Observable.of({ data: {} })
-
-    /**
-     * Uncomenting the liens below fixes this apollo client browser warning:
-     * `client.js:50 Missing field books in {}`
-     * And also allows our `/apollo/nuxt-apollo-error-handler.js` to handle errors (and redirect to error page with context.error)
-     * But causes the white screen error related to vue hydration
-     * `The client-side rendered virtual DOM tree is not matching server-rendered content.`
-     *
-     * We need a way to uncomment the line below without causing the white screen issue.
-     * Solution is likely in the GH issue threads above on lines 30-32
-     */
-
-    // return Observable.of({
-    //   data: { [operationName]: null },
-    //   errors
-    // })
+    return Observable.of({
+      data: { [operationName]: null },
+      errors,
+    })
   }
 )
