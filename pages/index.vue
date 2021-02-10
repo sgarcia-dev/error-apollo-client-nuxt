@@ -3,52 +3,59 @@
     <div>
       <Logo />
       <h1 class="title">apollo-client-nuxt</h1>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
+      <pre v-if="books.data">
+        {{ JSON.stringify(books.data, null, 2) }}
+      </pre>
+      <pre v-if="books.error">
+        {{ JSON.stringify(books.error, null, 2) }}
+      </pre>
     </div>
   </div>
 </template>
 
 <script>
 import gql from 'graphql-tag'
-import consola from 'consola'
 
 export default {
-  apollo: {
-    books: {
-      query() {
-        return gql`
+  async asyncData(context) {
+    const { defaultClient: apolloClient } = context.app.apolloProvider
+    const res = await apolloClient
+      .query({
+        query: gql`
           query books {
             books {
               title
               author
-              test
             }
           }
-        `
+        `,
+      })
+      // Upcoming catch/then is hardcoded, but ideally we should abstract this into its own utility folder
+      .catch((error) => ({ error }))
+      .then((res) => {
+        // Fallback DB operations can go here,
+        // but we still must ensure we are always returning the same signature:
+        // const res = { data, error }
+        return res
+      })
+
+    // Returned object will be bound to `this` instance state
+    return {
+      books: {
+        data: res.data?.books,
+        error: serializeObject(res.error),
       },
-      // eslint-disable-next-line
-      error(error, vm, key, type, options) {
-        consola.info('pages/index.js: error handler ran')
-        // return `false` to stop `nuxt-apollo-error-handler.js` from running
-      },
-    },
+    }
+
+    // Required to avoid nuxt asyncData SSR hydration warning: Cannot stringify arbitrary non-POJOs "ApolloError"
+    // https://github.com/vuex-orm/vuex-orm/issues/255
+    function serializeObject(obj) {
+      if (obj && typeof obj === 'object') {
+        return JSON.parse(JSON.stringify(obj))
+      } else {
+        return obj
+      }
+    }
   },
 }
 </script>
