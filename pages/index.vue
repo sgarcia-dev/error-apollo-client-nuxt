@@ -45,8 +45,10 @@ export default {
       },
       // eslint-disable-next-line
       error(error, vm, key, type, options) {
-        consola.info('pages/index.js: error handler ran')
-        // return `false` to stop `nuxt-apollo-error-handler.js` from running
+        consola.error('pages/index.js: something bad happened', error)
+        // should stop propagation based on this?
+        // https://github.com/vuejsv/ue-apollo/blob/83fb002c39519be0eeadad148d6ec58c552d4cc1/packages/vue-apollo/src/smart-apollo.js#L157
+        return false
       },
     },
   },

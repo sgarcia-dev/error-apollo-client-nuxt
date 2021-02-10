@@ -4,10 +4,9 @@ export default (
   { graphQLErrors, networkError, operation, forward },
   context
 ) => {
-  consola.info('nuxt-apollo-error-handler.js: error handler ran')
-  const hasError = !!graphQLErrors.length || !!networkError
-  if (hasError) {
-    consola.info('nuxt-apollo-error-handler.js: redirecting to error page')
+  const error = graphQLErrors?.length ? graphQLErrors : networkError
+  if (error) {
+    consola.error('nuxt-apollo-error-handler.js: something bad happened', error)
     context.error({
       message: 'Apollo error',
       statusCode: 500,
