@@ -13,6 +13,23 @@ export default {
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
 
+  hooks: {
+    render: {
+      errorMiddleware(app) {
+        app.use((error, req, res, next) => {
+          if (error) {
+            // eslint-disable-next-line no-console
+            console.log('render:errorMiddleware nuxt hook ran, redirecting ...')
+            res.writeHead(307, {
+              Location: '/network-error',
+            })
+            res.end()
+          }
+        })
+      },
+    },
+  },
+
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [],
 

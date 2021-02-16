@@ -20,37 +20,24 @@
         >
           GitHub
         </a>
+        <Books />
+        <!-- Error boundary approach does not work  -->
+        <!-- <ErrorBoundary>
+          <Books />
+        </ErrorBoundary>-->
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import gql from 'graphql-tag'
-import consola from 'consola'
+import Books from '../components/Books'
+// import ErrorBoundary from '../components/ErrorBoundary'
 
 export default {
-  apollo: {
-    books: {
-      query() {
-        return gql`
-          query books {
-            books {
-              title
-              author
-              test
-            }
-          }
-        `
-      },
-      // eslint-disable-next-line
-      error(error, vm, key, type, options) {
-        consola.error('pages/index.js: something bad happened', error)
-        // should stop propagation based on this?
-        // https://github.com/vuejsv/ue-apollo/blob/83fb002c39519be0eeadad148d6ec58c552d4cc1/packages/vue-apollo/src/smart-apollo.js#L157
-        return false
-      },
-    },
+  components: {
+    Books,
+    // ErrorBoundary,
   },
 }
 </script>
